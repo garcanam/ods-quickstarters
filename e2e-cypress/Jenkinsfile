@@ -24,3 +24,5 @@ odsQuickstarterPipeline(
 
   odsQuickstarterStageRenderSonarProperties(context)
 }
+
+sh "echo 'hello'"
