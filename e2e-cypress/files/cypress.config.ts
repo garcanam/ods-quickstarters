@@ -1,7 +1,7 @@
 import { defineConfig } from 'cypress'
 import setupNodeEvents from './plugins/index.js'
 export default defineConfig({
-  reporter: 'junit',
+  reporter: 'reporters/custom-reporter.js',
   reporterOptions: {
     mochaFile: 'build/test-results/tests-[hash].xml',
     toConsole: true,
@@ -15,8 +15,11 @@ export default defineConfig({
     viewportHeight: 660,
     experimentalModifyObstructiveThirdPartyCode: true,
     video: true,
-    setupNodeEvents(on, config) {
-      return require('./plugins/index.js')(on, config)
+    async setupNodeEvents(on, config) {
+      return (await import('./plugins/index')).default(on, config);
     },
   },
+  // env: {
+  //   otp_secret: process.env.OTP_SECRET
+  // },
 })
